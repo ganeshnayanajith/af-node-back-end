@@ -1,28 +1,28 @@
 //import packages
-const express = require('express');
-const app = express();
-const morgan = require('morgan');
-const bodyParser = require('body-parser');
-const mongoose = require('mongoose');
+const Express = require('express');
+const app = Express();
+const Morgan = require('morgan');
+const BodyParser = require('body-parser');
+const Mongoose = require('mongoose');
 
 //import files
-// const trainsRoutes = require('./api/routes/trainsRoutes');
-// const booksRoutes = require('./api/routes/booksRoutes');
+const UserRoutes = require('./api/routes/user.routes');
+const CoursesRoutes = require('./api/routes/course.routes');
 // const userRoutes = require('./api/routes/userRoutes');
 // const mobilePaymentsRoutes = require('./api/routes/mobilePaymentsRoutes');
 // const creditPaymentsRoutes = require('./api/routes/creditPaymentsRoutes');
 
 //connect mongodb atlas cloud
-mongoose.connect('mongodb://localhost:27017/react-group-project', {
+Mongoose.connect('mongodb://localhost:27017/react-group-project', {
     useCreateIndex: true,
     useNewUrlParser: true
 });
 
-mongoose.Promise=global.Promise;
+Mongoose.Promise=global.Promise;
 
-app.use(morgan('dev'));
-app.use(bodyParser.urlencoded({ extended: false }));
-app.use(bodyParser.json());
+app.use(Morgan('dev'));
+app.use(BodyParser.urlencoded({ extended: false }));
+app.use(BodyParser.json());
 
 //config cross origin servers.allows to communicate with api
 app.use((req, res, next) => {
@@ -41,10 +41,8 @@ app.use((req, res, next) => {
 
 
 //redirect relevent routes to relavant files
-app.use('/node/test', function(req,res){
-    console.log('done');
-});
-// app.use('/trains', trainsRoutes);
+app.use('/node/user', UserRoutes);
+app.use('/node/course', CoursesRoutes);
 // app.use('/books', booksRoutes);
 // app.use('/mobilePayments', mobilePaymentsRoutes);
 // app.use('/creditPayments', creditPaymentsRoutes);
